@@ -1,0 +1,281 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Bunkers {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="/static/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/static/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<link href="https://unpkg.com/bootstrap-table@1.18.1/dist/bootstrap-table.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
+{% endblock stylesheets %}
+
+{% block content %}
+<style>
+    textarea {
+        
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #sandbox-container {
+        
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    a.result {
+        text-decoration: none;
+        display: inline-block;
+        
+    }
+
+    a.result:hover {
+        background-color: #ddd;
+        color: black;
+    }
+   
+    .result {
+        background-color: rgb(230, 36, 36);
+        color: white;
+        padding: 8px 16px;
+        float: right;
+       
+    }
+
+</style>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark" style="font-family: Arial, Helvetica, sans-serif; ">INDIA  EDITABLE PAGE</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/index">Home</a></li>
+              <li class="breadcrumb-item active">India Editable Page</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main Editable News content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            
+            <div class="card">
+                <!-- editable covid news -->
+                <div class="card-body">
+
+                  
+                    <div>
+                        <h3 style="text-align: center; font-family: Arial, Helvetica, sans-serif;">Select Date For India Power</h2>
+                    </div>
+                    <hr>
+                    <a href="/india/power-generation" target="_blank" class="result">Go to India Power Report &raquo;</a>
+                    <br>
+                    <br>
+                    <p style="font-family: Arial, Helvetica, sans-serif; text-align: center;">Please click form below to select date</p>
+                    <div style="width:200px;" id="sandbox-container">
+                        
+                        <div class="input-group date power">
+                            
+                            <br>
+                            <input type="text" class="form-control" value="{{ read_power_date }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                    
+                 
+                    </div>
+                    <div class="row" style="float: right;">
+                        <button id="save-power-date" type="button" class="btn btn-outline-dark add-new">Save Selected Date</button>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div>
+                        <h3 style="text-align: center; font-family: Arial, Helvetica, sans-serif;">Select Date For India Stock</h2>
+                    </div>
+                    <hr>
+                    <a href="/india/coal-stock" target="_blank" class="result">Go to India Stock Report &raquo;</a>
+                    <br>
+                    <br>
+                    <p style="font-family: Arial, Helvetica, sans-serif; text-align: center;">Please click form below to select date</p>
+                    <div style="width:200px;" id="sandbox-container">
+                        
+                        <div class="input-group date stock">
+                            
+                            <br>
+                            <input type="text" class="form-control" value="{{ read_stock_date }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                       
+                    </div>
+                    <div class="row" style="float: right;">
+                        <button id="save-stock-date" type="button" class="btn btn-outline-dark add-new">Save Selected Date</button>
+                    </div>
+                   
+                </div>
+            
+                
+
+               
+                
+               
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+
+    <!-- Main Editable Vaccine content -->
+    
+    
+  </div>
+  
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  
+
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+  <!-- DataTables -->
+  <script src="/static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/static/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/bootstrap-table.min.js"></script>
+  
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+
+
+   
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+
+
+
+  <!-- OPTIONAL SCRIPTS -->
+  <script type="text/javascript">
+    $(document).ready(function(){
+        
+        
+        
+        
+        var max_date = '{{ power_max_date }}';
+        //// india power calender
+        $("#sandbox-container .input-group.date.power").datepicker({
+
+            format: "yyyy-mm-dd",
+            startDate: "2018-01-01",
+            endDate: max_date,
+            orientation: "bottom left",
+            // daysOfWeekDisabled: "0,1,3,4,5,6",
+            autoclose: true,
+           
+        });
+        var max_date = '{{ stock_max_date }}';
+        //// india stock calender
+        $("#sandbox-container .input-group.date.stock").datepicker({
+
+            format: "yyyy-mm-dd",
+            startDate: "2018-01-01",
+            endDate: max_date,
+            orientation: "bottom left",
+            // daysOfWeekDisabled: "0,1,3,4,5,6",
+            autoclose: true,
+
+        });
+        
+        // save date for india power 
+        $('#save-power-date').click(function(){
+            
+            var date = $(".input-group.date.power").find("input").val();
+            
+        
+            $.ajax({ 
+				type: "POST",
+				url: '/save_date_power',
+				data: JSON.stringify(date),
+				contentType: "application/json",
+				dataType: "json",
+				success: function(response) {
+                    if (response == 1){
+                        console.log('Save successfully');
+                        alert('Save successfully')
+                        // window.parent.closeDialog('editUser');
+
+                    } else {
+                        console.log('Not saved.')
+                    }
+                
+					
+					
+				}
+			});
+        })
+
+        // save date for india power 
+        $('#save-stock-date').click(function(){
+            
+            var date = $(".input-group.date.stock").find("input").val();
+            
+        
+            $.ajax({ 
+				type: "POST",
+				url: '/save_date_stock',
+				data: JSON.stringify(date),
+				contentType: "application/json",
+				dataType: "json",
+				success: function(response) {
+                    if (response == 1){
+                        console.log('Save successfully');
+                        alert('Save successfully')
+                        // window.parent.closeDialog('editUser');
+
+                    } else {
+                        console.log('Not saved.')
+                    }
+                
+					
+					
+				}
+			});
+        })
+
+    
+    });
+  </script>
+  <!-- page script -->
+
+
+{% endblock javascripts %}
