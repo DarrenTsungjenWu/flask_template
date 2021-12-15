@@ -54,6 +54,14 @@
               <div class="card-body">
                 <!-- {{ df }}
                 {{ x }} -->
+                <div class="row" style="float: right;">
+                  <button id="save" type="button" class="btn btn-outline-dark add-new">Save Edits</button>
+                </div>
+                <div class="row" style="left: 1%; top: 1%;">
+                  <button id="add-row" type="button" class="btn btn-outline-dark add-new">Add Rows</button>
+                </div>
+                <br>
+                <br>
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
@@ -66,11 +74,18 @@
                   <tbody>
                     {% for row in df %}
                   <tr>
-                    <td>{{ row['event_date'] }}</td>
-                    <td>{{ row['col_0'] }}</td>
-                    <td>{{ row['col_1'] }}</td>
-                    <td>{{ row['col_2'] }}</td>
-            
+                    <td>
+                      <div class="date">{{ row['event_date'] }}</div>
+                    </td>
+                    <td> 
+                      <input type="text" class="txtedit" value="{{ row['col_0'] }}">
+                    </td>
+                    <td>
+                      <input type="text" class="txtedit" value="{{ row['col_1'] }}">
+                    </td>
+                    <td>
+                      <input type="text" class="txtedit" value="{{ row['col_2'] }}">
+                    </td>
                   </tr>
                   {% endfor %}
                   </tbody>
@@ -89,7 +104,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">COVID-19 CORONAVIRUS PANDEMIC</h5>
+                            <h5 class="card-title">Plotly Offline Time Plot</h5>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -153,6 +168,7 @@
   <script src="/static/assets/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/static/assets/js/demo.js"></script>
+
   <!-- page script -->
   <script>
     $(function () {
@@ -169,9 +185,44 @@
         "autoWidth": false,
         "responsive": true,
       });
-      $('#example2').editableTableWidget();
+      // $('#example2').editableTableWidget();
     });
 
+    // save
+    $('#save').click(function(){
+        var trList = $("#example2").children("tbody").children("tr");
+        var table_example2_data = new Array();
+
+        for (var i=0;i<trList.length;i++){
+          example2_colname = {};
+          var tdArr = trList.eq(i).find("td");
+          var event_date = tdArr.eq(0).find('.date').text();
+          var col_0 = tdArr.eq(1).find('input').val();
+          var col_1 = tdArr.eq(2).find('input').val();
+          var col_2 = tdArr.eq(3).find('input').val();
+          example2_colname.event_date = event_date;
+          example2_colname.col_0 = col_0;
+          example2_colname.col_1 = col_1;
+          example2_colname.col_2 = col_2;
+          table_example2_data.push(example2_colname);
+        }
+        $.ajax({
+          type: "POST",
+          url: '/save_table',
+          data: JSON.stringify(table_example2_data),
+          contentType: "application/json",
+          dataType: "json",
+          success : function(response) {
+            if (response == 1){
+              console.log('Saved');
+              alert('Saved')
+            } else{
+              console.log('Fail to save') 
+            }
+          },
+        });
+    })
+  
   </script>
 
 {% endblock javascripts %}
