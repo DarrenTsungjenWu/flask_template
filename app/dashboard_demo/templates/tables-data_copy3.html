@@ -1,0 +1,372 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables Data {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/static/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/static/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %} 
+<style>
+  .edit{
+      width: 100%;
+     
+  }
+  
+  table {
+      
+      border-radius:3px;
+  }
+
+  table tr:nth-child(1) th{
+      background-color: #4285f4;
+      color: white;
+      letter-spacing: 1px;
+  }
+  
+  table th{
+      padding:10px;
+  }
+
+  .txtedit{
+      /* display:none; */
+      width:99%;
+      height: 120%;
+  }
+
+  a.next_page {
+      text-decoration: none;
+      display: inline-block;
+  }
+
+  a.next_page:hover {
+      background-color: #ddd;
+      color: black;
+  }
+ 
+  .next_page {
+      background-color: #04AA6D;
+      color: white;
+      padding: 8px 16px;
+      float: right;
+     
+  }
+</style>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>DataTables</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">DataTables</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">DataTable with minimal features & hover style</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- {{ df }}
+                {{ x }} -->
+                <div class="row" style="float: right;">
+                  <button id="save" type="button" class="btn btn-outline-dark add-new">Save Edits</button>
+                </div>
+                <div class="row" style="left: 1%; top: 1%;">
+                  <button id="add-row" type="button" class="btn btn-outline-dark add-new">Add Rows</button>
+                </div>
+                <br>
+                <br>
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>event_date</th>
+                    <th>col_0</th>
+                    <th>col_1</th>
+                    <th>col_2</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in df %}
+                  <tr>
+                    <td>
+                      <!-- <div class="date">{{ row['event_date'] }}</div> -->
+                      <input type="text" class="txtedit" value="{{ row['event_date'] }}">
+                      <span style="display:none">{{ row['event_date'] }}</span>
+                    </td>
+                    <td> 
+                      <input type="text" class="txtedit" value="{{ row['col_0'] }}">
+                      <span style="display:none">{{ row['col_0'] }}</span>
+                    </td>
+                    <td>
+                      <input type="text" class="txtedit" value="{{ row['col_1'] }}">
+                      <span style="display:none">{{ row['col_1'] }}</span>
+                    </td>
+                    <td>
+                      <input type="text" class="txtedit" value="{{ row['col_2'] }}">
+                      <span style="display:none">{{ row['col_2'] }}</span>
+                    </td>
+                    <td>        
+                      <button type="button" class="edit-btn btn btn-danger delete" data-event-date="{{ row['event_date'] }}"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                  <!-- <tfoot>
+                  <tr>
+                    <th>event_date</th>
+                    <th>col_0</th>
+                    <th>col_1</th>
+                    <th>col_2</th> 
+                  </tr>
+                  </tfoot> -->
+                </table>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Plotly Offline Time Plot</h5>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="chart">
+                                        <div id="covid-plotly">{{ div_placeholder }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+              <!-- /.card-body -->
+                   </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %} 
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables -->
+  <script src="/static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+  <!-- editableDataTables -->
+  <script src="/static/assets/plugins/datatables/editableDataTables.js"></script>
+  <!-- <script src="/static/assets/plugins/datatables/flow.js"></script> -->
+
+  <script src="/static/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+
+  <!-- page script -->
+  <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+      // $('#example2').editableTableWidget();
+    });
+  </script>
+  
+  <script type="text/javascript">
+  $(document).ready(function(){
+      show_input_element();
+      show_empty_txtedit();
+      delete_row();
+      
+      // show Input element
+      function show_input_element(){
+          $('.edit').click(function(){
+              $('.txtedit').hide();
+              $(this).next('.txtedit').show().focus();
+              $(this).hide();
+          })
+      }
+
+      function show_empty_txtedit(){
+          var input = $('.txtedit');
+          input.each(function(){
+          value = $(this).val()
+          if(!value){
+              $(this).show();
+            }
+          });
+      }
+
+      // Delete row on delete button click
+      function delete_row(){
+            $('.delete').click(function(){
+              let event_date = $(this).data("event-date");
+              let data={"event_date": event_date};
+              if (!confirm("Are you sure to delete?")) return false; 
+              
+              $.ajax({
+                type: "POST",
+                url: '/delete_row',
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+                success : function(response) {
+                  if (response == 1){
+                    console.log('Deleted');
+                    alert('Deleted');
+                    $(this).parents("tr").remove();
+                  } else{
+                    console.log('Fail to delete'); 
+                  }
+                },
+              });
+            })
+      };
+
+    $("#add-row").click(function(){
+        // var index = $("table tbody tr:last-child").index();
+        var row = '<tr>'+
+            // '<td><div class="date"></div></td>'+
+            '<td><input type="text" class="txtedit"></td>' +
+            '<td><input type="text" class="txtedit"></td>'+
+            '<td><input type="text" class="txtedit"></td>'+
+            '<td><input type="text" class="txtedit"></td>'+
+            '<td><button type="button" class="edit-btn btn btn-danger delete"><i class="fas fa-trash-alt"></i></button></td>'+
+            '</tr>';
+        $("#example2").append(row); 
+        // show_empty_txtedit();
+        show_input_element();
+        delete_row();
+    });
+
+    // Add row on add button click
+	$(document).on("click", ".add", function(){
+      var empty = false;
+      var input = $(this).parents("tr").find('input[type="text"]');
+          input.each(function(){
+        if(!$(this).val()){
+          $(this).addClass("error");
+          empty = true;
+        } else{
+                  $(this).removeClass("error");
+              }
+      });
+      $(this).parents("tr").find(".error").first().focus();
+      if(!empty){
+        input.each(function(){
+          $(this).parent("td").html($(this).val());
+        });			
+        $(this).parents("tr").find(".add, .edit").toggle();
+        $(".add-new").removeAttr("disabled");
+      }		
+      });
+
+    // save
+    $('#save').click(function(){
+        if (!confirm("Are you sure to save?")) return false; 
+
+        var trList = $("#example2").children("tbody").children("tr");
+        var table_example2_data = new Array();
+
+        for (var i=0;i<trList.length;i++){
+          example2_colname = {};
+          var tdArr = trList.eq(i).find("td");
+          // var event_date = tdArr.eq(0).find('.date').text();
+          var event_date = tdArr.eq(0).find('input').val();
+          var col_0 = tdArr.eq(1).find('input').val();
+          var col_1 = tdArr.eq(2).find('input').val();
+          var col_2 = tdArr.eq(3).find('input').val();
+          example2_colname.event_date = event_date;
+          example2_colname.col_0 = col_0;
+          example2_colname.col_1 = col_1;
+          example2_colname.col_2 = col_2;
+          if (event_date) table_example2_data.push(example2_colname);
+        }
+
+        $.ajax({
+          type: "POST",
+          url: '/save_table',
+          data: JSON.stringify(table_example2_data),
+          contentType: "application/json",
+          dataType: "json",
+          success : function(response) {
+            if (response == 1){
+              console.log('Saved');
+              alert('Saved');
+              // alert(result.success);
+            } else{
+              console.log('Fail to save');
+            }
+            
+          },
+        });
+      })
+    })
+  </script>
+
+{% endblock javascripts %}
