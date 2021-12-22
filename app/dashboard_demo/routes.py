@@ -6,7 +6,7 @@ import json
 import mysql.connector
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
-from connector_module import get_connection, get_cursor, create_and_delete_example_table, delete_selected_row
+from app.connector_module import get_connection, get_cursor, create_and_delete_example_table, delete_selected_row
 
 # app = Flask(__name__)
 # @app.route("/", methods=["GET", "POST"])

@@ -1,8 +1,19 @@
 import mysql.connector
 import datetime as dt
+import netifaces as ni
+import os
+
+os_name = os.name
+ni_interface = ni.interfaces()
+print(ni_interface)
+if os_name == 'posix':
+    host = ni.ifaddresses('eth0')[2][0]['addr']
+elif os_name == 'nt':
+    host = ni.ifaddresses(ni_interface[6])[2][0]['addr']
+
 
 connect_data = {
-    'host': 'localhost',
+    'host': 'localhost', # host #192.168.10.68 (this will change whenever you log into different connection)
     'user': 'newuser',
     'passwd': 'password',
     'database': 'dahshboard_demo'
